@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Flux.NewRelic.DeploymentReporter.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flux.NewRelic.DeploymentReporter.Controllers
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
+    [Authorize]
 	public class HookController : ControllerBase
 	{
 		private readonly ILogger<HookController> _logger;
@@ -15,30 +18,21 @@ namespace Flux.NewRelic.DeploymentReporter.Controllers
 		}
 
 		[HttpPut]
+		[HttpPost]
 		public IActionResult PutData([FromBody]dynamic hookContent, [FromQuery] HookType type)
 		{
 			return ManageHookContent(hookContent, type);
 		}
 
-		[HttpPost]
-		public IActionResult PostData([FromBody] dynamic hookContent, [FromQuery] HookType type)
-		{
-			return ManageHookContent(hookContent, type);
-		}
 
 		private IActionResult ManageHookContent(dynamic hookContent, HookType type)
 		{
+			// TODO some stuff here... heh (business logic)
 			var data = System.Text.Json.JsonSerializer.Serialize(hookContent);
 			
 			_logger.LogDebug($"{Request.Method}: {data}");
 
 			return NoContent();
 		}
-	}
-
-	public enum HookType
-	{
-		Unknown = 0,
-		Flux = 1,
 	}
 }
