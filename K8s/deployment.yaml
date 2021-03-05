@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flux-newrelic
+  labels:
+    app: flux-newrelic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flux-newrelic
+  template:
+    metadata:
+      labels:
+        app: flux-newrelic
+    spec:
+      containers:
+      - image: flux-newrelic # To be defined eventually
+        imagePullPolicy: Always
+        name: flux-newrelic
