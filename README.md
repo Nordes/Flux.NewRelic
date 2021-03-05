@@ -1,3 +1,5 @@
+[![.NET](https://github.com/Nordes/Flux.NewRelic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Nordes/Flux.NewRelic/actions/workflows/dotnet.yml)
+
 # Flux.NewRelic
 The goal of this project is to manage the release done by Flux in the Cluster by receiving WebHook post from the notification controller. 
 
