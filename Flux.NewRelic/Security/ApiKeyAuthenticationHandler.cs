@@ -5,12 +5,12 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Flux.NewRelic.DeploymentReporter.Models;
 using Flux.NewRelic.DeploymentReporter.Security.Exceptions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 
 namespace Flux.NewRelic.DeploymentReporter.Security
 {
@@ -32,14 +32,15 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
-			if (!Request.Headers.TryGetValue(ApiKeyHeaderName, out var apiKeyHeaderValues))
+			var apiKeyQueryValue = new StringValues(string.Empty);
+			if (!Request.Headers.TryGetValue(ApiKeyHeaderName, out var apiKeyHeaderValues) && !Request.Query.TryGetValue("api_key", out apiKeyQueryValue))
 			{
 				return AuthenticateResult.NoResult();
 			}
 
-			var providedApiKey = apiKeyHeaderValues.FirstOrDefault();
+			var providedApiKey = apiKeyHeaderValues.FirstOrDefault() ?? apiKeyQueryValue.FirstOrDefault();
 
-			if (apiKeyHeaderValues.Count == 0 || string.IsNullOrWhiteSpace(providedApiKey))
+			if (apiKeyHeaderValues.Count == 0 && string.IsNullOrEmpty(apiKeyQueryValue) || string.IsNullOrWhiteSpace(providedApiKey))
 			{
 				return AuthenticateResult.NoResult();
 			}
@@ -49,9 +50,9 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 			if (existingApiKey != null)
 			{
 				var claims = new List<Claim>
-			{
-				new Claim(ClaimTypes.Name, existingApiKey.Owner)
-			};
+					{
+						new Claim(ClaimTypes.Name, existingApiKey.Owner)
+					};
 
 				claims.AddRange(existingApiKey.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

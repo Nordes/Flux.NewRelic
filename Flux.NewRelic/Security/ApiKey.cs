@@ -5,6 +5,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 {
 	public class ApiKey
 	{
+		public ApiKey(){}
 		public ApiKey(int id, string owner, string key, DateTime created, IReadOnlyCollection<string> roles)
 		{
 			Id = id;
@@ -14,10 +15,10 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 			Roles = roles ?? throw new ArgumentNullException(nameof(roles));
 		}
 
-		public int Id { get; }
-		public string Owner { get; }
-		public string Key { get; }
-		public DateTime Created { get; }
-		public IReadOnlyCollection<string> Roles { get; }
+		public int Id { get; set; }
+		public string Owner { get; set; }
+		public string Key { get; set; }
+		public DateTime Created { get; set; }
+		public IReadOnlyCollection<string> Roles { get; set; }
 	}
 }

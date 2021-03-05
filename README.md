@@ -19,6 +19,24 @@ curl --location \
     | jq '.applications[] | {name: .name, id: .id}'
 ```
 
+## How to call our Hook
+API Keys are defined in the `appsettings.json`. In Kubernetes, you can override the entire file using a _ConfigMap_. The AzureVault is not defined yet, but it could also be an option. The usage would require extra libraries to the project. Since I want to keep it simple for now, I might think about adding this feature later.
+
+**Choice #1:** Use the `api_key` as part of the query string.
+```
+curl --location --request POST 'https://localhost:5001/hook?type=ImagePolicy&api_key=8f1e9594-55cc-44dc-b76a-e084cdd57d83' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{"some":"thing"}'
+```
+
+**Choice #2:** Use the `X-Api-key` as part of the header.
+```
+curl --location --request POST 'https://localhost:5001/hook?type=ImagePolicy' \
+    --header 'X-Api-key: 8f1e9594-55cc-44dc-b76a-e084cdd57d83' \
+    --header 'Content-Type: application/json' \
+    --data-raw '{"some":"thing"}'
+```
+
 # How to contribute?
 Contact me or simply do a PR, it will be welcome.
 
