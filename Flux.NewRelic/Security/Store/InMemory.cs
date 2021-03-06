@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Flux.NewRelic.DeploymentReporter.Configurations;
-using Microsoft.Extensions.Options;
 
 namespace Flux.NewRelic.DeploymentReporter.Security.Store
 {
