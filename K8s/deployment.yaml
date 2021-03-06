@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flux-newrelic
+  name: newrelic-hook-controller
   labels:
-    app: flux-newrelic
+    app: newrelic-hook-controller
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: flux-newrelic
+      app: newrelic-hook-controller
   template:
     metadata:
       labels:
-        app: flux-newrelic
+        app: newrelic-hook-controller
     spec:
       containers:
-      - image: flux-newrelic # To be defined eventually
+      - image: newrelic-hook-controller:latest # To be defined eventually
         imagePullPolicy: Always
-        name: flux-newrelic
+        name: newrelic-hook-controller

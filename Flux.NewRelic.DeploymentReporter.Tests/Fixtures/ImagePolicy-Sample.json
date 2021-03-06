@@ -1,0 +1,16 @@
+{
+	"involvedObject": {
+		"kind": "ImagePolicy",
+		"namespace": "flux-system",
+		"name": "the-policy-name",
+		"uid": "fd62c2f8-fe04-4fe8-bfd8-b7a583ea0f67",
+		"apiVersion": "image.toolkit.fluxcd.io/v1alpha1",
+		"resourceVersion": "69855472"
+	},
+	"severity": "info",
+	"timestamp": "2021-03-06T00:52:41Z",
+	"message": "Latest image tag for \u0027some-acr.azurecr.io/container-name\u0027 resolved to: 1.2.3-develop.1023",
+	"reason": "info",
+	"reportingController": "image-reflector-controller",
+	"reportingInstance": "image-reflector-controller-85796d5c4d-78czj"
+}

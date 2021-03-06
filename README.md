@@ -5,6 +5,10 @@ The goal of this project is to manage the release done by Flux in the Cluster by
 
 **Why is the project in C# or even Dotnet and not in GO?** Just because... it could even be in F# if I wanted to. I just went with something quick to build. Probably in the future I will look forward to change the language and even the structure of the project. 
 
+# Compatibility
+- [X] 0.9.0
+- [X] 0.9.1
+
 # Maturity
 This project is not yet mature enough to use. So please wait... ;)
 

@@ -1,0 +1,16 @@
+{
+	"involvedObject": {
+		"kind": "GitRepository",
+		"namespace": "flux-system",
+		"name": "flux-system",
+		"uid": "f5f03733-8a9f-4b0f-b943-1bde4b944cb5",
+		"apiVersion": "source.toolkit.fluxcd.io/v1beta1",
+		"resourceVersion": "69855487"
+	},
+	"severity": "info",
+	"timestamp": "2021-03-06T00:57:42Z",
+	"message": "Fetched revision: main/49fc0e14ad37d5a4918c572280118e2fb12ac6e8",
+	"reason": "info",
+	"reportingController": "source-controller",
+	"reportingInstance": "source-controller-c55db769d-gqvhr"
+}

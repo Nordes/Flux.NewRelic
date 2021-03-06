@@ -28,13 +28,12 @@ namespace Flux.NewRelic.DeploymentReporter.Controllers
 			return await ManageHookContentAsync(hookContent, type);
 		}
 
-
 		private async Task<IActionResult> ManageHookContentAsync(dynamic hookContent, HookType type)
 		{
 			// TODO some stuff here... heh (business logic)
 			var data = System.Text.Json.JsonSerializer.Serialize(hookContent);
 
-			_logger.LogDebug($"{Request.Method}: {data}");
+			_logger.LogInformation($"{Request.Method}: {data}"); // (Debug)
 			await _newRelicClient.CreateDeploymentAsync(new NewRelicDeployment());
 
 			return NoContent();
