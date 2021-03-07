@@ -17,7 +17,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 	public class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthenticationOptions>
 	{
 		private const string ProblemDetailsContentType = "application/problem+json";
-		private readonly IGetApiKeyQuery _getApiKeyQuery;
+		private readonly IApiKeyStore _getApiKeyQuery;
 		private const string ApiKeyHeaderName = "X-Api-Key";
 
 		public ApiKeyAuthenticationHandler(
@@ -25,7 +25,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 			ILoggerFactory logger,
 			UrlEncoder encoder,
 			ISystemClock clock,
-			IGetApiKeyQuery getApiKeyQuery) : base(options, logger, encoder, clock)
+			IApiKeyStore getApiKeyQuery) : base(options, logger, encoder, clock)
 		{
 			_getApiKeyQuery = getApiKeyQuery ?? throw new ArgumentNullException(nameof(getApiKeyQuery));
 		}

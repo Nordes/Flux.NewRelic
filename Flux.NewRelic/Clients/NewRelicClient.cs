@@ -1,10 +1,10 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Flux.NewRelic.DeploymentReporter.Models;
+using Flux.NewRelic.DeploymentReporter.Models.NewRelic;
 
 namespace Flux.NewRelic.DeploymentReporter.Clients
 {
-	public class NewRelicClient: INewRelicClient
+    public class NewRelicClient: INewRelicClient
 	{
 
 		private readonly HttpClient _httpClient;

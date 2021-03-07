@@ -8,10 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Flux.NewRelic.DeploymentReporter.Security;
 using Flux.NewRelic.DeploymentReporter.Security.Store;
+using Flux.NewRelic.DeploymentReporter.Logic;
+using Flux.NewRelic.DeploymentReporter.Logic.EventStrategies;
+using Flux.NewRelic.DeploymentReporter.BackgroundJobs;
 
 namespace Flux.NewRelic.DeploymentReporter
 {
-	public class Startup
+    public class Startup
 	{
 		private readonly IConfiguration _configuration;
 
@@ -39,8 +42,15 @@ namespace Flux.NewRelic.DeploymentReporter
 			
 			// Debug purpose, should not go to prod like this? (maybe yes... who knows).
 			services.AddSingleton(applicationConfig);
-			services.AddSingleton<IGetApiKeyQuery, InMemory>();
+			services.AddSingleton<IApiKeyStore, InMemoryStore>();
 
+			// Add background job
+			services.AddHostedService<ConfigWatchJob>();
+
+			// 
+			services.AddSingleton<IFluxEventFactory, FluxEventFactory>(); // bad but ok..
+			services.AddSingleton<IEventStrategy, GitRepositoryStrategy>();
+			services.AddSingleton<IEventStrategy, ImagePolicyStrategy>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

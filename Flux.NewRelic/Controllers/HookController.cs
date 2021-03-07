@@ -1,42 +1,45 @@
 ﻿using System.Threading.Tasks;
-using Flux.NewRelic.DeploymentReporter.Clients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Flux.NewRelic.DeploymentReporter.Models;
 using Microsoft.AspNetCore.Authorization;
+using Flux.NewRelic.DeploymentReporter.Logic;
+using System;
 
 namespace Flux.NewRelic.DeploymentReporter.Controllers
 {
-	[ApiController]
-	[Route("[controller]")]
-	[Authorize]
-	public class HookController : ControllerBase
-	{
-		private readonly ILogger<HookController> _logger;
-		private readonly INewRelicClient _newRelicClient;
+    [ApiController]
+    [Route("[controller]")]
+    [Authorize]
+    public class HookController : ControllerBase
+    {
+        private readonly ILogger<HookController> _logger;
+        private readonly IFluxEventFactory _fluxEventFactory;
 
-		public HookController(ILogger<HookController> logger, INewRelicClient newRelicClient)
-		{
-			_logger = logger;
-			_newRelicClient = newRelicClient;
-		}
+        public HookController(ILogger<HookController> logger, IFluxEventFactory fluxEventFactory)
+        {
+            _logger = logger;
+            _fluxEventFactory = fluxEventFactory;
+        }
 
-		[HttpPut]
-		[HttpPost]
-		public async Task<IActionResult> PutDataAsync([FromBody] dynamic hookContent, [FromQuery] HookType type)
-		{
-			return await ManageHookContentAsync(hookContent, type);
-		}
+        [HttpPut]
+        [HttpPost]
+        public async Task<IActionResult> PutDataAsync([FromBody] Models.Flux.Event @event)
+        {
+            var data = System.Text.Json.JsonSerializer.Serialize(@event);
+            _logger.LogDebug($"{Request?.Method}: {data}");
 
-		private async Task<IActionResult> ManageHookContentAsync(dynamic hookContent, HookType type)
-		{
-			// TODO some stuff here... heh (business logic)
-			var data = System.Text.Json.JsonSerializer.Serialize(hookContent);
+            try
+            {
+                var executionStrategy = _fluxEventFactory.Get(@event.InvolvedObject.Kind);
+                await executionStrategy.ExecuteAsync(@event);
+            }
+            catch (Exception e)
+            {
+                // Swallow the error
+                _logger.LogError(e, "Error while proceeding the requested content.", @event);
+            }
 
-			_logger.LogInformation($"{Request.Method}: {data}"); // (Debug)
-			await _newRelicClient.CreateDeploymentAsync(new NewRelicDeployment());
-
-			return NoContent();
-		}
-	}
+            return NoContent();
+        }
+    }
 }
