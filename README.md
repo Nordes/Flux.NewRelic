@@ -47,7 +47,7 @@ curl --location --request POST 'https://localhost:5001/hook?type=ImagePolicy' \
 # How to contribute?
 Contact me or simply do a PR, it will be welcome.
 
-- [ ] Need to add API Key implementation (ref.: https://josef.codes/asp-net-core-protect-your-api-with-api-keys/)
+- [X] Need to add API Key implementation (ref.: https://josef.codes/asp-net-core-protect-your-api-with-api-keys/)
 
 # License
 MIT
