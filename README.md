@@ -1,5 +1,6 @@
 [![.NET](https://github.com/Nordes/Flux.NewRelic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Nordes/Flux.NewRelic/actions/workflows/dotnet.yml)
-
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/Nordes/2d25e1c74703ebd1cf0dbef7217e9d18/raw/50df5213877b626b6a7002c5bb4d99abb741be3f/code-coverage.yml)
+         
 # Flux.NewRelic
 The goal of this project is to manage the release done by Flux in the Cluster by receiving WebHook post from the notification controller. 
 
