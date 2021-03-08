@@ -14,7 +14,7 @@ namespace Flux.NewRelic.DeploymentReporter.Logic
             _strategies = strategies.ToDictionary(f => f.Kind, f => f);
         }
 
-        private Dictionary<Kind, IEventStrategy> _strategies;
+        private readonly Dictionary<Kind, IEventStrategy> _strategies;
 
         public IEventStrategy Get(Kind kind)
         {

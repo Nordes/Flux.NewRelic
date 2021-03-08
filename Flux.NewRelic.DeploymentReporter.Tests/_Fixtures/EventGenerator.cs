@@ -7,13 +7,13 @@ namespace Flux.NewRelic.DeploymentReporter.Tests._Fixtures
 {
     internal static class EventGenerator
     {
-        private static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
         };
 
-        public static Event Get(Kind kind, string name = null, string ns = "flux-system", string timestamp = "2021-03-06T00:52:41Z")
+        public static Event Get(Kind kind, string name = null, string ns = "flux-system", string timestamp = "2021-03-06T00:52:41Z", string imageTag = "1.2.3-develop.1023")
         {
             switch (kind)
             {
@@ -31,7 +31,7 @@ namespace Flux.NewRelic.DeploymentReporter.Tests._Fixtures
                             },
                             ""severity"": ""info"",
                             ""timestamp"": """ + timestamp + @""",
-                            ""message"": ""Latest image tag for \u0027some-acr.azurecr.io/container-name\u0027 resolved to: 1.2.3-develop.1023"",
+                            ""message"": ""Latest image tag for \u0027some-acr.azurecr.io/container-name\u0027 resolved to: " + imageTag + @""",
                             ""reason"": ""info"",
                             ""reportingController"": ""image-reflector-controller"",
                             ""reportingInstance"": ""image-reflector-controller-85796d5c4d-78czj""

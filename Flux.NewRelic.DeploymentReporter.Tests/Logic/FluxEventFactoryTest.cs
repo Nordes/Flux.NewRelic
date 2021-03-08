@@ -9,7 +9,7 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Logic
 {
     public class FluxEventFactoryTest
     {
-        private List<IEventStrategy> _eventStrategies;
+        private readonly List<IEventStrategy> _eventStrategies;
 
         public FluxEventFactoryTest()
         {
