@@ -28,8 +28,8 @@ jobs:
       uses: simon-k/dotnet-code-coverage-badge@v1.0.0
       id: create_coverage_badge
       with:
-        label: Unit Test Coverage
-        color: brightgreen
+        label: Coverage
+        color: "#32CB55"
         path: Flux.NewRelic.DeploymentReporter.Tests/TestResults/coverage.opencover.xml
         gist-filename: code-coverage.json
         gist-id: 2d25e1c74703ebd1cf0dbef7217e9d18
