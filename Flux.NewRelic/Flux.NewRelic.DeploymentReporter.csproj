@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <!--
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishTrimmed>true</PublishTrimmed>
+    <CrossGenDuringPublish>false</CrossGenDuringPublish>
+    -->
   </PropertyGroup>
-
+  
+  <!--If we load SSL-->
+  <!--
+  <ItemGroup>
+    <TrimmerRootAssembly Include="System.Net.Security" />
+    <TrimmerRootAssembly Include="System.Security" />
+  </ItemGroup>
+  -->
+  
 </Project>
