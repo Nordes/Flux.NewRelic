@@ -22,4 +22,5 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --logger trx /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  
+# dotnet test --logger trx -r TestsResults --no-restore -c Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura  
