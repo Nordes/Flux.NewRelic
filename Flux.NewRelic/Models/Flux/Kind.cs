@@ -1,10 +1,19 @@
 namespace Flux.NewRelic.DeploymentReporter.Models.Flux
 {
+    /// <summary>
+    /// Relates to the FLUX - Custom Resource Definition (CRD) alerts.notification.toolkit.fluxcd.io
+    /// </summary>
     public enum Kind
     {
         Unknown = 0,
-        GitRepository = 1,
-        ImagePolicy = 2,
-        // other to be defined
+        Bucket,
+        GitRepository,
+        Kustomization,
+        HelmRelease,
+        HelmChart,
+        HelmRepository,
+        ImagePolicy,
+        ImageRepository,
+        ImageUpdateAutomation,
     }
 }

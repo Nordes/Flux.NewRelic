@@ -8,7 +8,7 @@ namespace Flux.NewRelic.DeploymentReporter.Logic
 {
     public class FluxEventFactory: IFluxEventFactory
     {
-        public FluxEventFactory(ICollection<IEventStrategy> strategies)
+        public FluxEventFactory(IEnumerable<IEventStrategy> strategies)
         {
             // Not sure it's the best approach to do this.
             _strategies = strategies.ToDictionary(f => f.Kind, f => f);

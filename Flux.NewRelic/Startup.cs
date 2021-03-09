@@ -49,10 +49,17 @@ namespace Flux.NewRelic.DeploymentReporter
 			// Add background job
 			services.AddHostedService<ConfigWatchJob>();
 
-			// 
-			services.AddSingleton<IFluxEventFactory, FluxEventFactory>(); // bad but ok..
+			// Strategies for how to handle the message.
+			services.AddSingleton<IFluxEventFactory, FluxEventFactory>();
+			services.AddSingleton<IEventStrategy, BucketStrategy>();
 			services.AddSingleton<IEventStrategy, GitRepositoryStrategy>();
+			services.AddSingleton<IEventStrategy, KustomizationStrategy>();
+			services.AddSingleton<IEventStrategy, HelmChartStrategy>();
+			services.AddSingleton<IEventStrategy, HelmReleaseStrategy>();
+			services.AddSingleton<IEventStrategy, HelmRepositoryStrategy>();
 			services.AddSingleton<IEventStrategy, ImagePolicyStrategy>();
+			services.AddSingleton<IEventStrategy, ImageRepositoryStrategy>();
+			services.AddSingleton<IEventStrategy, ImageUpdateAutomationStrategy>();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

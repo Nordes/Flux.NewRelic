@@ -35,7 +35,7 @@ namespace Flux.NewRelic.DeploymentReporter.Controllers
             }
             catch (Exception e)
             {
-                // Swallow the error
+                // Swallow the error and display the error.
                 _logger.LogError(e, "Error while proceeding the requested content.", @event);
             }
 
