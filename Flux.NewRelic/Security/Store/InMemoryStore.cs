@@ -11,7 +11,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security.Store
 		private readonly IDictionary<string, ApiKey> _apiKeys;
 		private static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
 
-		public InMemoryStore(ApplicationConfig config)
+		public InMemoryStore(AppSettings config)
 		{
 			if (config.ApiKeys.Any())
 			{

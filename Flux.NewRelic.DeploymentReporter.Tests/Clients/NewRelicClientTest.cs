@@ -16,18 +16,18 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Clients
     public class NewRelicClientTest
     {
         private readonly ILogger<NewRelicClient> _logger;
-        private readonly ApplicationConfig _appConfig;
+        private readonly AppSettings _appConfig;
 
         public NewRelicClientTest()
         {
             _logger = Mock.Of<ILogger<NewRelicClient>>();
-            _appConfig = new ApplicationConfig
+            _appConfig = new AppSettings
             {
-                NewRelic = new ApplicationConfig.NewRelicConfig
+                NewRelic = new AppSettings.NewRelicConfig
                 {
                     LicenseKey = "ABCDEF"
                 },
-                Mappings = new List<ApplicationConfig.Mapping> { }
+                Mappings = new List<AppSettings.Mapping> { }
             };
         }
 

@@ -15,13 +15,13 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Logic.EventStrategies
     {
         private readonly ILogger<ImagePolicyStrategy> _logger;
         private readonly Mock<INewRelicClient> _newRelicClient;
-        private readonly ApplicationConfig _applicationConfig;
+        private readonly AppSettings _applicationConfig;
 
         public ImagePolicyStrategyTest()
         {
             _logger = Mock.Of<ILogger<ImagePolicyStrategy>>();
             _newRelicClient = new Mock<INewRelicClient>(MockBehavior.Strict);
-            _applicationConfig = new ApplicationConfig();
+            _applicationConfig = new AppSettings();
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Logic.EventStrategies
             // Arrange
             var ctor = new ImagePolicyStrategy(_logger, _newRelicClient.Object, _applicationConfig);
             var evt = EventGenerator.Get(ctor.Kind);
-            _applicationConfig.Mappings.Add(new ApplicationConfig.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
+            _applicationConfig.Mappings.Add(new AppSettings.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
             _newRelicClient.Setup(m => m.CreateDeploymentAsync("12345", It.IsAny<Deployment>())).Returns(Task.CompletedTask);
             // Act
             await ctor.ExecuteAsync(evt);
@@ -65,7 +65,7 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Logic.EventStrategies
             // Arrange
             var ctor = new ImagePolicyStrategy(_logger, _newRelicClient.Object, _applicationConfig);
             var evt = EventGenerator.Get(ctor.Kind);
-            _applicationConfig.Mappings.Add(new ApplicationConfig.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
+            _applicationConfig.Mappings.Add(new AppSettings.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
             _newRelicClient.Setup(m => m.CreateDeploymentAsync("12345", It.IsAny<Deployment>())).Returns(Task.CompletedTask);
             // Act
             await ctor.ExecuteAsync(evt);
@@ -83,7 +83,7 @@ namespace Flux.NewRelic.DeploymentReporter.Tests.Logic.EventStrategies
             var ctor = new ImagePolicyStrategy(_logger, _newRelicClient.Object, _applicationConfig);
             var evt = EventGenerator.Get(ctor.Kind);
             var evt2 = EventGenerator.Get(ctor.Kind, imageTag: "1.2.4");
-            _applicationConfig.Mappings.Add(new ApplicationConfig.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
+            _applicationConfig.Mappings.Add(new AppSettings.Mapping() { FluxPolicyName = evt.InvolvedObject.Name, NewRelicAppId = "12345", Kind = Kind.ImagePolicy });
             _newRelicClient.Setup(m => m.CreateDeploymentAsync("12345", It.IsAny<Deployment>())).Returns(Task.CompletedTask);
             // Act
             await ctor.ExecuteAsync(evt);   // First deployment

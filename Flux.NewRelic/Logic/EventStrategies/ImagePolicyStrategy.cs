@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static Flux.NewRelic.DeploymentReporter.Configurations.ApplicationConfig;
+using static Flux.NewRelic.DeploymentReporter.Configurations.AppSettings;
 
 namespace Flux.NewRelic.DeploymentReporter.Logic.EventStrategies
 {
@@ -17,10 +17,10 @@ namespace Flux.NewRelic.DeploymentReporter.Logic.EventStrategies
     {
         private readonly ILogger<ImagePolicyStrategy> _logger;
         private readonly INewRelicClient _newRelicClient;
-        private readonly ApplicationConfig _appConfig;
+        private readonly AppSettings _appConfig;
         private readonly Dictionary<string, ImagePolicyInfo> _cache = new Dictionary<string, ImagePolicyInfo>();
 
-        public ImagePolicyStrategy(ILogger<ImagePolicyStrategy> logger, INewRelicClient newRelicClient, ApplicationConfig appConfig)
+        public ImagePolicyStrategy(ILogger<ImagePolicyStrategy> logger, INewRelicClient newRelicClient, AppSettings appConfig)
         {
             _logger = logger;
             _newRelicClient = newRelicClient;

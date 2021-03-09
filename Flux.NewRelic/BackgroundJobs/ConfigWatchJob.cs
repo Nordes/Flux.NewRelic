@@ -12,10 +12,10 @@ namespace Flux.NewRelic.DeploymentReporter.BackgroundJobs
     {
         private readonly ILogger<ConfigWatchJob> _logger;
         private readonly IApiKeyStore _apiKeyStore;
-        private readonly ApplicationConfig _appConfig;
+        private readonly AppSettings _appConfig;
         private readonly TimeSpan _loopDelay = TimeSpan.FromSeconds(30);
 
-        public ConfigWatchJob(ILogger<ConfigWatchJob> logger, IApiKeyStore apiKeyStore, ApplicationConfig appConfig)
+        public ConfigWatchJob(ILogger<ConfigWatchJob> logger, IApiKeyStore apiKeyStore, AppSettings appConfig)
         {
             _logger = logger;
             _apiKeyStore = apiKeyStore;

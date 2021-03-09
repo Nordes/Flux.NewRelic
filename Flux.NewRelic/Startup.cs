@@ -27,7 +27,11 @@ namespace Flux.NewRelic.DeploymentReporter
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			var applicationConfig = _configuration.GetSection("Config").Get<ApplicationConfig>();
+			// Look at : https://edi.wang/post/2019/1/5/auto-refresh-settings-changes-in-aspnet-core-runtime
+			var applicationConfig = _configuration.GetSection("AppSettings").Get<AppSettings>();
+            services.AddSingleton(applicationConfig);
+			// interesting thing about auto-reload: https://edi.wang/post/2019/1/5/auto-refresh-settings-changes-in-aspnet-core-runtime
+			//services.Configure<AppSettings>(_configuration.GetSection(nameof(AppSettings))); // (Could also do something like this)
 
 			services.AddControllers();
 			services.AddMemoryCache();
@@ -43,7 +47,6 @@ namespace Flux.NewRelic.DeploymentReporter
 				.AddApiKeySupport(options => { });
 			
 			// Debug purpose, should not go to prod like this? (maybe yes... who knows).
-			services.AddSingleton(applicationConfig);
 			services.AddSingleton<IApiKeyStore, InMemoryStore>();
 
 			// Add background job

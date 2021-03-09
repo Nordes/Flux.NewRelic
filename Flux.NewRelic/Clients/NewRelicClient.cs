@@ -15,7 +15,7 @@ namespace Flux.NewRelic.DeploymentReporter.Clients
         private readonly ILogger<NewRelicClient> _logger;
         private readonly HttpClient _httpClient;
 
-        public NewRelicClient(ILogger<NewRelicClient> logger, HttpClient httpClient, ApplicationConfig appConfig)
+        public NewRelicClient(ILogger<NewRelicClient> logger, HttpClient httpClient, AppSettings appConfig)
         {
             _logger = logger;
             _httpClient = httpClient;

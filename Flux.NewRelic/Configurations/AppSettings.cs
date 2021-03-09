@@ -4,7 +4,7 @@ using Flux.NewRelic.DeploymentReporter.Security;
 
 namespace Flux.NewRelic.DeploymentReporter.Configurations
 {
-    public class ApplicationConfig
+    public class AppSettings
 	{
 		/// <summary>
 		/// ApiKey to access the API's
