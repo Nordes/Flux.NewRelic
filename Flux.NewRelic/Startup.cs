@@ -11,10 +11,12 @@ using Flux.NewRelic.DeploymentReporter.Security.Store;
 using Flux.NewRelic.DeploymentReporter.Logic;
 using Flux.NewRelic.DeploymentReporter.Logic.EventStrategies;
 using Flux.NewRelic.DeploymentReporter.BackgroundJobs;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Flux.NewRelic.DeploymentReporter
 {
-    public class Startup
+	[ExcludeFromCodeCoverage]
+	public class Startup
 	{
 		private readonly IConfiguration _configuration;
 

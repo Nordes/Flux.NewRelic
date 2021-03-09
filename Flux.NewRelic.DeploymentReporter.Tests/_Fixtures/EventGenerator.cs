@@ -1,13 +1,15 @@
 ﻿using Flux.NewRelic.DeploymentReporter.Models.Flux;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Flux.NewRelic.DeploymentReporter.Tests._Fixtures
 {
+    [ExcludeFromCodeCoverage]
     internal static class EventGenerator
     {
-        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
+        private readonly static JsonSerializerOptions _jsonSerializerOptions = new()
         {
             PropertyNameCaseInsensitive = true,
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }

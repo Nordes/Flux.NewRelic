@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flux.NewRelic.DeploymentReporter.Tests._Helpers
 {
+	[ExcludeFromCodeCoverage]
     public class HttpClientDelagetedHandler : DelegatingHandler
     {
         private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _handlerFunc;
