@@ -49,6 +49,11 @@ namespace Flux.NewRelic.DeploymentReporter
 			// Debug purpose, should not go to prod like this? (maybe yes... who knows).
 			services.AddSingleton<IApiKeyStore, InMemoryStore>();
 
+			services.AddStackExchangeRedisCache(o =>
+				{
+					o.Configuration = _configuration.GetConnectionString("redis");
+				});
+
 			// Add background job
 			services.AddHostedService<ConfigWatchJob>();
 

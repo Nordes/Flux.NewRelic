@@ -9,7 +9,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security.Store
 	public class InMemoryStore : IApiKeyStore
 	{
 		private readonly IDictionary<string, ApiKey> _apiKeys;
-		private static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
+		private static readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1);
 
 		public InMemoryStore(AppSettings config)
 		{
@@ -20,27 +20,28 @@ namespace Flux.NewRelic.DeploymentReporter.Security.Store
 			}
 		}
 
-		public Task<ApiKey> Execute(string providedApiKey)
+		/// <inheritdoc cref="IApiKeyStore.ExecuteAsync"/>
+		public Task<ApiKey> ExecuteAsync(string key)
 		{
 			_semaphoreSlim.Wait();
-			_apiKeys.TryGetValue(providedApiKey, out var key);
+			_apiKeys.TryGetValue(key, out var keyFound);
 			_semaphoreSlim.Release();
-			return Task.FromResult(key);
+			return Task.FromResult(keyFound);
 		}
 
 		/// <summary>
 		/// Refresh the keys in case the config file have changed.
 		/// </summary>
 		/// <param name="keys">New keys to take into consideration.</param>
-        public void RefreshKeys(Dictionary<string, ApiKey> keys)
-        {
+		public void RefreshKeys(Dictionary<string, ApiKey> keys)
+		{
 			_semaphoreSlim.Wait();
 			_apiKeys.Clear();
-            foreach ((var key, var apiKey) in keys)
-            {
+			foreach (var (key, apiKey) in keys)
+			{
 				_apiKeys.Add(key, apiKey);
-            }
+			}
 			_semaphoreSlim.Release();
-        }
-    }
+		}
+	}
 }

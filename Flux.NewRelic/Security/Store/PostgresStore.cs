@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace Flux.NewRelic.DeploymentReporter.Security.Store
 {
-	public class RedisStore : IApiKeyStore
+	public class PostgresStore : IApiKeyStore
 	{
-		private readonly IDistributedCache _cache;
-
-		public RedisStore(IDistributedCache cache)
+		public PostgresStore()
 		{
-			_cache = cache;
+			// TODO Probably need to run a migration to deploy itself then add the keys if none were existing.
 		}
 
 		public Task<ApiKey> ExecuteAsync(string key)
 		{
-			// Key format for cache: /flux/newrelic/apikeys/[key]
-			//_cache.GetAsync()
-			// _cache.GetAsync()
 			throw new NotImplementedException();
 		}
 
         public void RefreshKeys(Dictionary<string, ApiKey> keys)
         {
-            throw new NotImplementedException();
+			// Should do nothing, since we use a database
         }
     }
 }

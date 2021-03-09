@@ -7,6 +7,6 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 	{
 		void RefreshKeys(Dictionary<string, ApiKey> keys);
 
-		Task<ApiKey> Execute(string providedApiKey);
+		Task<ApiKey> ExecuteAsync(string key);
 	}
 }

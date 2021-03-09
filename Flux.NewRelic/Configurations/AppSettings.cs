@@ -37,9 +37,9 @@ namespace Flux.NewRelic.DeploymentReporter.Configurations
 			public Kind Kind { get; set; } = Kind.ImagePolicy;
 
 			/// <summary>
-			/// 
+			/// New Relic Application Id. This Id is available through the New Relic API's.
 			/// </summary>
-            public string NewRelicAppId { get; set; }
+			public string NewRelicAppId { get; set; }
         }
 
 		public class NewRelicConfig

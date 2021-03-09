@@ -10,3 +10,29 @@ services:
   project: Flux.NewRelic/Flux.NewRelic.DeploymentReporter.csproj
 
 # Eventually use redis or postgres for keeping state
+#
+# Redis: https://github.com/dotnet/tye/blob/master/docs/tutorials/hello-tye/02_add_redis.md
+- name: redis
+  image: redis
+  bindings:
+  - port: 6379
+    connectionString: "${host}:${port}" 
+
+- name: redis-cli
+  image: redis
+  args: "redis-cli -h redis MONITOR"
+
+# # Postgres
+# - name: postgres
+#   image: postgres:13-alpine
+#   env:
+#   # Optional (user)
+#   - name: POSTGRES_USER 
+#     value: pguser
+#   - name: POSTGRES_PASSWORD
+#     value: pgpwd
+#   - name: POSTGRES_DB
+#     value: fluxnr
+#   bindings:
+#   - port: 5432
+#     connectionString: Host=${host};Port=${port};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}

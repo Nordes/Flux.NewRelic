@@ -5,7 +5,8 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 {
 	public class ApiKey
 	{
-		public ApiKey(){}
+		public ApiKey() { }
+		
 		public ApiKey(int id, string owner, string key, DateTime created, IReadOnlyCollection<string> roles)
 		{
 			Id = id;

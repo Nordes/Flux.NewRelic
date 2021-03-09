@@ -19,6 +19,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 		private const string ProblemDetailsContentType = "application/problem+json";
 		private readonly IApiKeyStore _getApiKeyQuery;
 		private const string ApiKeyHeaderName = "X-Api-Key";
+		private const string ApiKeyRequestStringName = "api_key";
 
 		public ApiKeyAuthenticationHandler(
 			IOptionsMonitor<ApiKeyAuthenticationOptions> options,
@@ -33,25 +34,26 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
 			var apiKeyQueryValue = new StringValues(string.Empty);
-			if (!Request.Headers.TryGetValue(ApiKeyHeaderName, out var apiKeyHeaderValues) && !Request.Query.TryGetValue("api_key", out apiKeyQueryValue))
+			if (!Request.Headers.TryGetValue(ApiKeyHeaderName, out var apiKeyHeaderValues) && 
+			    !Request.Query.TryGetValue(ApiKeyRequestStringName, out apiKeyQueryValue))
 			{
 				return AuthenticateResult.NoResult();
 			}
 
 			var providedApiKey = apiKeyHeaderValues.FirstOrDefault() ?? apiKeyQueryValue.FirstOrDefault();
 
-			if (apiKeyHeaderValues.Count == 0 && string.IsNullOrEmpty(apiKeyQueryValue) || string.IsNullOrWhiteSpace(providedApiKey))
+			if (!apiKeyHeaderValues.Any() && string.IsNullOrEmpty(apiKeyQueryValue) || string.IsNullOrWhiteSpace(providedApiKey))
 			{
 				return AuthenticateResult.NoResult();
 			}
 
-			var existingApiKey = await _getApiKeyQuery.Execute(providedApiKey);
+			var existingApiKey = await _getApiKeyQuery.ExecuteAsync(providedApiKey);
 
 			if (existingApiKey != null)
 			{
 				var claims = new List<Claim>
 					{
-						new Claim(ClaimTypes.Name, existingApiKey.Owner)
+						new(ClaimTypes.Name, existingApiKey.Owner)
 					};
 
 				claims.AddRange(existingApiKey.Roles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -69,7 +71,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 
 		protected override async Task HandleChallengeAsync(AuthenticationProperties properties)
 		{
-			Response.StatusCode = 401;
+			Response.StatusCode = StatusCodes.Status401Unauthorized;
 			Response.ContentType = ProblemDetailsContentType;
 			var problemDetails = new UnauthorizedProblemDetails();
 
@@ -78,7 +80,7 @@ namespace Flux.NewRelic.DeploymentReporter.Security
 
 		protected override async Task HandleForbiddenAsync(AuthenticationProperties properties)
 		{
-			Response.StatusCode = 403;
+			Response.StatusCode = StatusCodes.Status403Forbidden;
 			Response.ContentType = ProblemDetailsContentType;
 			var problemDetails = new ForbiddenProblemDetails();
 
